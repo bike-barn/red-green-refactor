@@ -6,4 +6,4 @@ Write here
 ### Check List
 
 - [ ] All test passed
-- [ ] Added test to ensure to fix/ensure properly.
+- [ ] Any new functionality or fixes you added is covered by new tests
