@@ -143,19 +143,3 @@ class Calc:
         # values together.
         result = left.value + right.value
         return result
-
-
-def main():
-    while True:
-        try:
-            text = input("calc>")
-        except EOFError:
-            break
-        if not text:
-            continue
-        calc = Calc(text)
-        result = calc.parse()
-        print(result)
-
-if __name__ == "__main__":
-    main()
