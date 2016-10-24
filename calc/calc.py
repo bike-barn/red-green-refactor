@@ -9,12 +9,7 @@ This code base was build and tested in Python3.5.
 INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
 
 class CalcError(Exception):
-    """Default exception for the calculator. Only thrown as a last resort.
-    Normally this means a more strict exception wasn't found. If you see this
-    kind of exception in the wild consider putting in an enchancement request
-    for a more narrow exception type for the given erroneous input.
-    """
-    pass
+    """Base exception for the calculator."""
 
 class Token:
 
@@ -67,17 +62,14 @@ class Calc:
         # current token
         self.current_token = None
 
-    def _error(self) -> None:
-        """
-        """
-        # NOTE: force students to test these kinds of functions so they catch
-        # things like mis-namings.
-        raise CalcError()
-
     def _next_token(self) -> Token:
         """This is the method that calls the token class and breaks the input
         text into a set of tokens. This set of operations is called lexical
         analyization.
+
+        raises:
+            CalcError: If the character(s) at the given position cannot be
+                tokenized.
         """
         text = self.text
         position = self.position
@@ -99,8 +91,9 @@ class Calc:
             self.position += 1
             return Token(PLUS, current_character)
 
-        # if this method is called then an error will be raised.
-        self._error()
+        raise CalcError(
+            "Invalid token at position "
+            "{position}".format(position=self.position))
 
     def _consume_token(self, token_type):
         """consume_token checks the current tokens type with the token type
@@ -109,12 +102,18 @@ class Calc:
         args:
             token_type: You can think of the token_type as the token that is
                 next expected and should be found.
+
+        raises:
+            CalcError: If ``token_type`` does not match the current token.
         """
         if self.current_token.type == token_type:
             self.current_token = self._next_token()
         else:
-            # Mistake: Accidently named this function self.error()
-            self._error()
+            raise CalcError(
+                "Expected {token_type} at position {position}, found "
+                "{current_token}".format(token_type=token_type,
+                                         position=self.position,
+                                         current_token=self.current_token.type))
 
     def parse(self):
         """parse consumes all of the tokens found in self.text looking for a
@@ -154,8 +153,8 @@ def main():
             break
         if not text:
             continue
-        interpreter = Interpreter(text)
-        result = interpreter.parse()
+        calc = Calc(text)
+        result = calc.parse()
         print(result)
 
 if __name__ == "__main__":
