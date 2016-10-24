@@ -9,11 +9,30 @@ def test_calc_blank_expression():
     Calc(text=input_text)
 
 
-def test_calc_error_type():
-    input_text = ""
+def test_raises_error_on_invalid_tokens():
+    """
+    Test that invalid tokens cause a ``CalcError`` and that the exception stack
+    traace contains useful information.
+    """
+
+    input_text = "foo"
     calc = Calc(text=input_text)
-    with pytest.raises(CalcError):
-        calc._error()
+    with pytest.raises(CalcError) as err:
+        calc.parse()
+    assert "Invalid token at position 0" in str(err.value)
+
+
+def test_raises_error_on_unexepected_syntax():
+    """
+    Test that unexpected syntax causes a ``CalcError`` and that the exception
+    stack trace contains useful information.
+    """
+
+    input_text = "+"
+    calc = Calc(text=input_text)
+    with pytest.raises(CalcError) as err:
+        calc.parse()
+    assert "Expected INTEGER at position 1, found PLUS" in str(err.value)
 
 
 def test_invalid_string_errors():
