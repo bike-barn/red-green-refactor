@@ -1,4 +1,4 @@
-"""This program is an interpreter for a subset of the PASCAL programming
+"""This program is a interpreter for a subset of the PASCAL programming
 language. It's' based off of the Let's Build A Simple Interpreter tutorial
 found at https://ruslanspivak.com/lsbasi-part1/
 
@@ -8,8 +8,8 @@ This code base was build and tested in Python3.5.
 # My "test_eof_at_end_of_line" test found the error.
 INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
 
-class InterpreterError(Exception):
-    """Default exception for the interpter. Only thrown as a last resort. 
+class CalcError(Exception):
+    """Default exception for the calculator. Only thrown as a last resort.
     Normally this means a more strict exception wasn't found. If you see this
     kind of exception in the wild consider putting in an enchancement request
     for a more narrow exception type for the given erroneous input.
@@ -25,7 +25,7 @@ class Token:
             type: A name used to associate what kind and parameters of data
                 that will be present in the Token object.
             value: A value that's hopefully valid for the passed in data type.
-                example is that INTEGER type is associated with 
+                example is that INTEGER type is associated with
                 -1, 0, 1, 2, ...
 
         NOTE: no verification of data is currently being done. Later versions
@@ -54,7 +54,7 @@ class Token:
                 value=self.value,
             )
 
-class Interpreter:
+class Calc:
 
     def __init__(self, text):
         """
@@ -72,7 +72,7 @@ class Interpreter:
         """
         # NOTE: force students to test these kinds of functions so they catch
         # things like mis-namings.
-        raise InterpreterError()
+        raise CalcError()
 
     def _next_token(self) -> Token:
         """This is the method that calls the token class and breaks the input
