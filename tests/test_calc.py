@@ -60,9 +60,9 @@ def test_eof_token_after_int():
 def test_consume_valid_token():
     input_text = "1+1"
     calc = Calc(text=input_text)
-    # Mistake: Since _next_token changes the state of position you can't just
-    # calc.current_token = calc.Token(INTEGER, 1)
-    # You have to call _next_token.
+    # Note: Since _next_token advances position one cannot simply
+    # >>> calc.current_token = Token(INTEGER, 1)
+    # The _next_token method MUST be called or this test will fail.
     calc.current_token = calc._next_token()
     calc._consume_token(INTEGER)
     assert calc.current_token.type == PLUS
@@ -75,12 +75,13 @@ def test_consume_invalid_token():
     with pytest.raises(CalcError):
         calc._consume_token(INTEGER)
 
+
 def test_parse_addition():
-    # NOTE: I misnamed this test function. Another function had the same name
-    # For a little while and as such this test was never ran.
+    # Note: This function name was briefly duplicated and therefore didn't run.
     input_text = "1+1"
     calc = Calc(text=input_text)
     assert calc.parse() == 2
+
 
 def test_parse_sets_eof():
     input_text = "1+1"

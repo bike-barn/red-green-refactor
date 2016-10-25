@@ -1,6 +1,8 @@
-# NOTE: So when I made this I made the mistake of switching the token strings.
-# My "test_eof_at_end_of_line" test found the error.
+# Saved by the test: When these constants were defined the token strings were
+# inadvertently switched. The ``test_eof_token_at_end_of_line`` test caught the
+# error.
 INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
+
 
 class Token:
 
@@ -36,6 +38,6 @@ class Token:
         variables.
         """
         return "Token(type={type}, value={value})".format(
-                type=self.type,
-                value=self.value,
-            )
+            type=self.type,
+            value=self.value,
+        )

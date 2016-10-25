@@ -38,7 +38,7 @@ class Calc:
         # Check to make sure we haven't run out of characters. If we have,
         # return an EOF token.
         if position > len(text) - 1:
-            # NOTE: forgot the return statement and test caughtn it.
+            # Saved by the test: Forgot this return and tests caught it.
             return Token(EOF, None)
 
         # Get the character that's at the current position.
