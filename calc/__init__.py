@@ -6,7 +6,7 @@
  \___|\__,_||_| \___|
 
 
-Note:
+Rabbit hole:
     The relative imports here (noted by the . prefix) are done as a convenience
     so that the consumers of the ``calc`` package can directly use objects
     belonging to the ``calc.calc`` module. Essentially this enables the consumer
