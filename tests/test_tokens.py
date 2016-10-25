@@ -24,10 +24,10 @@ def test_known_type():
 def test_str_non_string_value():
     token = Token(type=INTEGER, value=2)
     expected_result = "Token(type=INTEGER, value=2)"
-    assert token.__str__() == expected_result
+    assert str(token) == expected_result
 
 
 def test_repr():
     token = Token(type=INTEGER, value=2)
     expected_result = "Token(type=INTEGER, value=2)"
-    assert token.__repr__() == expected_result
+    assert repr(token) == expected_result
