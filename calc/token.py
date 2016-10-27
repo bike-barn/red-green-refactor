@@ -1,3 +1,8 @@
+"""
+The token module provides the :class:`Token` class, which is used to represent
+various expected states in the input text for a calculator.
+"""
+
 # Saved by the test: When these constants were defined the token strings were
 # inadvertently switched. The ``test_eof_token_at_end_of_line`` test caught the
 # error.
@@ -5,37 +10,52 @@ INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
 
 
 class Token:
+    """
+    A calculator token used to represent the current state of the calculator.
+
+    Note:
+        There is no verification of valid tokens at this point. Later version of
+        this class should verify correct input parameters.
+
+    Args:
+        type (str): The type of token. Valid types are currently ``INTEGER``,
+            ``PLUS``, and ``EOF``.
+        value (:obj:`int` or :obj:`str`): The value of the token. Valid values
+            are currently non-negative integers, or the ``+`` operator.
+
+    Attributes:
+        type (str): The type of token. Valid types are currently ``INTEGER``,
+            ``PLUS``, and ``EOF``.
+        value (:obj:`int` or :obj:`str`): The value of the token. Valid values
+            are currently non-negative integers, or the ``+`` operator.
+
+    Rabbit hole:
+        The ``type`` keyword is a reserved word in Python. It is typically bad
+        practice to create a new variable that overrides a reserved word, but it
+        is useful in this context and the scope is limited, so we take advantage
+        of that here.
+    """
 
     def __init__(self, type, value):
-        """Simple creation method used to build Tokens.
-
-        args:
-            type: A name used to associate what kind and parameters of data
-                that will be present in the Token object.
-            value: A value that's hopefully valid for the passed in data type.
-                example is that INTEGER type is associated with
-                -1, 0, 1, 2, ...
-
-        NOTE: no verification of data is currently being done. Later versions
-        of this class should check for invalid values based on passed in type
-        and invalide types.
-        """
+        """Constructor for a :class:`Token` object."""
         self.type = type
         self.value = value
 
     def __str__(self):
-        """Produces a human readable representation of this objects meta data
-        and data.
-
-        For now this is simple enough that we're just returning the machine
-        readable format. Subject to change as complexity increases.
         """
-        return self.__repr__()
+        Produce a human readable representation of this object.
 
-    def __repr__(self):
-        """Produces a string that, if passed to a python interpreter with the
-        Token type defined, will create a new Token object with the current
-        variables.
+        Rabbit hole:
+            Methods like ``__str__`` or ``__init__`` are special methods for
+            Python classes. Commonly referred to as "magic methods", these
+            methods are invoked by certain Python syntax. For example, when one
+            calls
+
+            >>> str(Token('INTEGER', 3))
+            Token(type=INTEGER, value=3)
+
+            Python is actually calling the ``Token.__str__`` method to determine
+            how it should create the string representation of that object.
         """
         return "Token(type={type}, value={value})".format(
             type=self.type,
