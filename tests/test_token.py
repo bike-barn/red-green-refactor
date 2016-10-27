@@ -25,9 +25,3 @@ def test_str_non_string_value():
     token = Token(type=INTEGER, value=2)
     expected_result = "Token(type=INTEGER, value=2)"
     assert str(token) == expected_result
-
-
-def test_repr():
-    token = Token(type=INTEGER, value=2)
-    expected_result = "Token(type=INTEGER, value=2)"
-    assert repr(token) == expected_result
