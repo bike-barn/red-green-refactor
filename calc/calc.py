@@ -1,36 +1,78 @@
-"""This program is a interpreter for a subset of the PASCAL programming
-language. It's' based off of the Let's Build A Simple Interpreter tutorial
-found at https://ruslanspivak.com/lsbasi-part1/
-
-This code base was build and tested in Python3.5.
+"""
+The calc module provides the :class:`Calc` class, which is the primary
+calculator class. It contains the logic necessary to tokenize input strings and
+produce a result.
 """
 
 from .token import Token, INTEGER, EOF, PLUS
 
+
 class CalcError(Exception):
-    """Base exception for the calculator."""
+    """
+    The base exception for the calculator.
+
+    Exceptions in Python inherit from :class:`Exception` and can then be used
+    with the ``raise`` keyword. For example, to raise this exception one might
+    do something liket this
+
+    >>> raise CalcError("Could not parse token at position 0")
+    """
+
 
 class Calc:
+    """
+    The primary calculator class which contains the logic for parsing tokens
+    from an input string.
 
-    def __init__(self, text):
-        """
-        """
-        # Text to be interpreted
-        # NOTE: no verification at this point in time.
+    Note:
+        There is no verification on the input ``text`` at this time.
+
+    Args:
+        text (str): The text to be interpreted.
+
+    Attributes:
+        text (str): The text to be interpreted.
+        position (int): The current position of the interpreter. Used as an
+            index into a :obj:`str`, ``text``. Defaults to ``0``, the beginning
+            of the input ``text``.
+        current_token (Token): The current :class:`Token` being evaluated by the
+            intepreter. Defaults to ``None`` as initially no :class:`Token`s
+            have been parsed.
+
+    Example:
+
+    >>> calc = Calc("3+4")
+    >>> calc.parse()
+    7
+
+    """
+    def __init__(self, text, position=0, current_token=None):
+        """Constructor for a :class:`Calc` object."""
         self.text = text
-        # position of the index on self.text
-        self.position = 0
-        # current token
-        self.current_token = None
+        self.position = position
+        self.current_token = current_token
 
-    def _next_token(self) -> Token:
-        """This is the method that calls the token class and breaks the input
-        text into a set of tokens. This set of operations is called lexical
-        analyization.
+    def _next_token(self):
+        """
+        Tokenize the input ``text``. This is part of a process called lexical
+        analysis.
 
-        raises:
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
             CalcError: If the character(s) at the given position cannot be
                 tokenized.
+
+        Rabbit hole:
+            This method is prefixed by a ``_`` to denote that it is a "private"
+            method. Python itself has no concept of public or private class
+            attributes or methods, but a single or double ``_`` prefix is used
+            as a convention among Pythonistas to denote something that should
+            not be relied upon by an external user.
         """
         text = self.text
         position = self.position
@@ -57,15 +99,24 @@ class Calc:
             "{position}".format(position=self.position))
 
     def _consume_token(self, token_type):
-        """consume_token checks the current tokens type with the token type
-        that's passed in. If they don't match then an error is raised.
+        """
+        Ensure that the current token type matches the given ``token_type``. If
+        it does, set the current token to be the next token, effectively
+        consuming a token.
 
-        args:
-            token_type: You can think of the token_type as the token that is
-                next expected and should be found.
+        Args:
+            token_type (str): The type of token that is next expected by the
+                calculator. Examples include ``INTEGER``, ``PLUS``, or ``EOF``.
 
-        raises:
+        Returns:
+            None
+
+        Raises:
             CalcError: If ``token_type`` does not match the current token.
+
+        Rabbit hole:
+            This method is prefixed by a ``_`` to denote that it is a "private"
+            method. See the docstring for ``_next_token`` for more information.
         """
         if self.current_token.type == token_type:
             self.current_token = self._next_token()
@@ -77,10 +128,23 @@ class Calc:
                                          current_token=self.current_token.type))
 
     def parse(self):
-        """parse consumes all of the tokens found in self.text looking for a
-        set of expected tokens. Currently supported token sets are
+        """
+        Attempt to consume all tokens found in the input text.
+
+        These tokens are expected to be found in a certain order, otherwise
+        known as a grammar.  The current grammar (or set of rules for allowable
+        tokens) looks like
 
         INTEGER PLUS INTEGER
+
+        All other combinations are not currently supported.
+
+        Args:
+            None
+
+        Returns:
+            result (int): The numeric result of parsing the input text as a set
+                of arithmetic operations.
         """
         # Just take whatever the first token is.
         self.current_token = self._next_token()
@@ -89,15 +153,14 @@ class Calc:
         left = self.current_token
         self._consume_token(INTEGER)
 
-        # The next expected Token is a PLUS
-        OP = self.current_token
+        # The next expected token is a PLUS
         self._consume_token(PLUS)
 
-        # Lastly we expect another integer for addition to work.
+        # We expect another integer for addition to work.
         right = self.current_token
         self._consume_token(INTEGER)
 
-        # Lastly we expect to run out of input.
+        # Finally, we expect to run out of input.
         self._consume_token(EOF)
 
         # Since we now have INTEGER PLUS INTEGER we can add both integer
