@@ -68,11 +68,11 @@ class Calc:
                 tokenized.
 
         Rabbit hole:
-            This method is prefixed by a ``_`` to denote that it is a "private"
-            method. Python itself has no concept of public or private class
-            attributes or methods, but a single or double ``_`` prefix is used
-            as a convention among Pythonistas to denote something that should
-            not be relied upon by an external user.
+            The name of this method is prefixed by a ``_`` to denote that it is
+            a "private" method. Python itself has no concept of public or
+            private class attributes or methods, but a single or double ``_``
+            prefix is used as a convention among Pythonistas to denote something
+            that should not be relied upon by an external user.
         """
         text = self.text
         position = self.position
@@ -115,8 +115,9 @@ class Calc:
             CalcError: If ``token_type`` does not match the current token.
 
         Rabbit hole:
-            This method is prefixed by a ``_`` to denote that it is a "private"
-            method. See the docstring for ``_next_token`` for more information.
+            The name of this method is prefixed by a ``_`` to denote that it is
+            a "private" method. See the docstring for ``_next_token`` for more
+            information.
         """
         if self.current_token.type == token_type:
             self.current_token = self._next_token()

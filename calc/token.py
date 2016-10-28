@@ -14,8 +14,8 @@ class Token:
     A calculator token used to represent the current state of the calculator.
 
     Note:
-        There is no verification of valid tokens at this point. Later version of
-        this class should verify correct input parameters.
+        There is no verification of valid tokens at this point. Later versions
+        of this class should verify correct input parameters.
 
     Args:
         type (str): The type of token. Valid types are currently ``INTEGER``,

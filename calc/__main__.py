@@ -36,7 +36,7 @@ def main():
 
 # Rabbit hole: This pattern below is a Python idiom that basically says, if this
 # module (this file) is being run as the main program (i.e. it was invoked from
-# the command line as python __main__.py, then run the main() function. In
+# the command line as python __main__.py), then run the main() function. In
 # practice this means that this module can be imported without actually running
 # the main() function, but that main() will be run if that is the intention.
 if __name__ == '__main__':
