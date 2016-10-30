@@ -1,5 +1,4 @@
-"""Operator focused testing
-"""
+"""Operator focused testing"""
 import pytest
 
 import calc
