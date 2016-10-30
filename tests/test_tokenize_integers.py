@@ -1,4 +1,5 @@
-"""All Unit tests which focus on arithmatic operations in the calculator.
+"""
+All Unit tests which focus on arithmatic operations in the calculator.
 """
 import pytest
 

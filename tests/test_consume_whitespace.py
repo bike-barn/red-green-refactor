@@ -1,4 +1,5 @@
-"""All Unit tests which focus on how whitespace is handled by the calculator.
+"""
+All Unit tests which focus on how whitespace is handled by the calculator.
 
 Rabbit Hole:
     If you wanted to write the tests in this module in a more compact way and

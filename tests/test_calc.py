@@ -1,3 +1,7 @@
+"""
+Tests focused on the basic mechanics of the calculator. These focus on the
+internal consistency of the calculator state.
+"""
 import pytest
 
 from calc import INTEGER, EOF, PLUS, Calc, CalcError
