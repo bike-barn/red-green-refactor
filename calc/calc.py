@@ -292,11 +292,8 @@ class Calc:
                 result = left.value + right.value
             elif op.type == MINUS:
                 result = left.value - right.value
-            else:
-                raise CalcError(
-                    "Unknown Operator found at {position}".format(
-                        position=self.position,
-                    ))
+            # There's no reason to include an else statement here. `next_token`
+            # will throw an error if an unknown operator is found.
 
             left = Token(INTEGER, result)
 
