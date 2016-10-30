@@ -1,4 +1,22 @@
 """All Unit tests which focus on how whitespace is handled by the calculator.
+
+Rabbit Hole:
+    If you wanted to write the tests in this module in a more compact way and
+    keep all of the same functionality here's how you could do it. This
+    requires explaining decorators, parametrization, how test reporting works,
+    and iterators. We chose to go with the more verbose but simpler
+    implementation below.
+
+@pytest.mark.parametrize('input_text', [
+    ' 1 + 1 ',
+    ' 1+1',
+    '1+1 ',
+    '1 + 1',
+    ' 1\t+\f\v 1\n',
+])
+def test_whitespace(input_text):
+    calc = Calc(text=input_text)
+    assert calc.parse() == 2
 """
 import pytest
 
