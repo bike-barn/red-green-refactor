@@ -12,9 +12,9 @@ def test_parse_handles_whitespace_correctly():
 
 
 def test_parse_handles_pre_whitespace_correctly():
-    # These tests are redudent in that the first should handle this case but
-    # sometimes it's useful for clerifications reasons to include tests like
-    # this to pin-point if pre, post, or mid conditions are failing and in what
+    # These tests are redundant in that the first should handle this case but
+    # sometimes it's useful for clarifications reasons to include tests like
+    # this to pinpoint if pre, post, or mid conditions are failing and in what
     # combination.
     input_text = " 1+1"
     calc = Calc(text=input_text)

@@ -1,4 +1,4 @@
-"""
+"""Operator focused testing
 """
 import pytest
 
@@ -23,13 +23,25 @@ def test_parse_multiplication_both_positive():
     assert calculator.parse() == 20
 
 
+def test_parse_addition_identity():
+    input_text = "1 + 0"
+    calculator = calc.Calc(text=input_text)
+    assert calculator.parse() == 1
+
+
+def test_parse_subtraction_identity():
+    input_text = "1 + 0"
+    calculator = calc.Calc(text=input_text)
+    assert calculator.parse() == 1
+
+
 def test_parse_division_identity():
     input_text = "1/1"
     calculator = calc.Calc(text=input_text)
     assert calculator.parse() == 1
 
 
-def test_parse_division_integer_division():
+def test_parse_integer_division_instead_of_floating_division():
     input_text = "10/3"
     calculator = calc.Calc(text=input_text)
     assert calculator.parse() == 3
@@ -41,7 +53,7 @@ def test_parse_division_of_zero():
     assert calculator.parse() == 0
 
 
-def test_parse_division_of_by_zero():
+def test_parse_division_by_zero():
     input_text = "10/0"
     calculator = calc.Calc(text=input_text)
     with pytest.raises(ZeroDivisionError):

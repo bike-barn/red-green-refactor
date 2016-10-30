@@ -19,10 +19,11 @@ class CalcError(Exception):
     """
 
 
-# Rabbit Hole: Pylint is a program that takes in as input a Python file. It'll
-#              will give you a list of syntatic, symantic, and stylistic errors
-#              that you can fix. This is how you tell pylint to ignore a style
-#              error if you don't agree with the style for specific instances.
+# Rabbit Hole:
+#   Pylint is a program that takes in as input a Python file. It'll will give
+#   you a list of syntatic, semantic, and stylistic errors that you can fix.
+#   This is how you tell pylint to ignore a style error if you don't agree with
+#   the style for specific instances.
 
 # pylint: disable=too-few-public-methods
 class Calc:
@@ -62,7 +63,7 @@ class Calc:
         """If have found a single digit then this helper function will read
         characters until the end of the integer is found.
 
-        args:
+        Args:
             text: A section of the text that is assumed to contain an integer
 
         Returns:
@@ -71,9 +72,9 @@ class Calc:
         Raises:
             None
         """
-        # Saved By The Test: The first couple attempts at this function were
-        # very messed up  and screwed up other functionality in the interpreter
-        # that my tests  caught.
+        # Saved By The Test:
+        #   The first couple attempts at this function were very messed up and
+        #   broke other functionality in the interpreter that my tests caught.
 
         # First we check to see if there are other digits in the int.
         first_position = self.position
@@ -99,7 +100,7 @@ class Calc:
     def _consume_whitespace(self, text):
         """Eats all whitespace found until there's nothing left.
 
-        args:
+        Args:
             text: The input text to have whitespace removed until a non
                   whitespace character is found.
 
@@ -170,7 +171,7 @@ class Calc:
 
         # Saved By The Test: test_arithmetic caught an error if return_token
         #                    was never set
-        return_token = None # Stores the token that's been lexed.
+        return_token = None  # Stores the token that's been lexed.
 
         if current_character.isdigit():
             return_token = self._tokenize_integer(text)
@@ -190,7 +191,6 @@ class Calc:
         if current_character == "-":
             self.position += 1
             return_token = Token(MINUS, current_character)
-
 
         if return_token is None:
             raise CalcError(
@@ -250,6 +250,9 @@ class Calc:
         Returns:
             result (int): The numeric result of parsing the input text as a set
                 of arithmetic operations.
+
+        Raises:
+            CalcError: If an invalide operator is found.
         """
         # Just take whatever the first token is.
         self.current_token = self._next_token()
@@ -270,17 +273,20 @@ class Calc:
                 # multiplying or dividing 0 is bad times.
                 result = 1
 
-
             # Since we now have INTEGER PLUS INTEGER we can add both integer
             # values together.
-            # NOTE: when I added the divided by operation symmantics I copied the
-            #       multiplication if statement and didn't change it to an elif.
-            #       My previous multiplication unit tests pointed out the error.
+
+            # Saved By The Test:
+            #    The Division if statement was originally a copy and paste
+            #    of the multiplication if statement. Forgot to change the
+            #    operator.
+
             if op.type == TIMES:
                 result = left.value * right.value
             elif op.type == DIVIDED_BY:
-                #  NOTE: When I first made this function I accidently did floating
-                #        point division and my unit test cought it.
+                # Saved By The Test:
+                #    This function accidently did floating point division and
+                #    the unit tests cought it.
                 result = left.value // right.value
             elif op.type == PLUS:
                 result = left.value + right.value
@@ -294,7 +300,8 @@ class Calc:
 
             left = Token(INTEGER, result)
 
-            # If we run out of input
+            # When we run out of input we need to check that the last token is
+            # EOF.
             if self.current_token.type == EOF:
                 self._consume_token(EOF)
                 return result

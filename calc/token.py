@@ -45,15 +45,7 @@ class Token:
 
     # pylint: disable=redefined-builtin
     def __init__(self, type, value):
-        """Constructor for a :class:`Token` object.
-
-        args:
-            type: A name used to associate what kind and parameters of data
-                that will be present in the Token object.
-            value: A value that's hopefully valid for the passed in data type.
-                example is that INTEGER type is associated with
-                -1, 0, 1, 2, ...
-        """
+        """Constructor for a :class:`Token` object."""
         self.type = type
         self.value = value
 
