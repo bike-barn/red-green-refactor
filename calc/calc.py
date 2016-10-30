@@ -4,7 +4,7 @@ calculator class. It contains the logic necessary to tokenize input strings and
 produce a result.
 """
 
-from .token import Token, INTEGER, EOF, PLUS
+from .token import Token, INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
 
 
 class CalcError(Exception):
@@ -52,6 +52,72 @@ class Calc:
         self.position = position
         self.current_token = current_token
 
+    def _tokenize_integer(self, text):
+        """If have found a single digit then this helper function will read
+        characters until the end of the integer is found.
+
+        args:
+            text: A section of the text that is assumed to contain an integer
+
+        Returns:
+            Token
+
+        Raises:
+            None
+        """
+        # Saved By The Test: The first couple attempts at this function were
+        # very messed up  and screwed up other functionality in the interpreter
+        # that my tests  caught.
+
+        # First we check to see if there are other digits in the int.
+        first_position = self.position
+        current_position = self.position
+        current_character = text[current_position]
+
+        while True:
+            if not current_character.isdigit():
+                break
+
+            current_position += 1
+            try:
+                current_character = text[current_position]
+            except IndexError:
+                # If we've hit EOF we'll hit this exception.
+                break
+
+        # Current position should be EOF or a digit.
+        self.position = current_position
+        value = int(text[first_position: current_position])
+        return Token(INTEGER, value)
+
+    def _consume_whitespace(self, text):
+        """Eats all whitespace found until there's nothing left.
+
+        args:
+            text: The input text to have whitespace removed until a non
+                  whitespace character is found.
+
+        returns:
+            None
+
+        raises:
+            None
+        """
+        current_position = self.position
+        current_character = text[current_position]
+        while True:
+            if not current_character.isspace():
+                break
+
+            current_position += 1
+            try:
+                current_character = text[current_position]
+            except IndexError:
+                # If we've hit EOF we'll hit this exception.
+                break
+
+        self.position = current_position
+
     def _next_token(self):
         """
         Tokenize the input ``text``. This is part of a process called lexical
@@ -86,27 +152,58 @@ class Calc:
         # Get the character that's at the current position.
         current_character = text[position]
 
+        # If we find whitespace eat it like we're Packman.
+        if current_character.isspace():
+            self._consume_whitespace(text)
+
+            if self.position > len(text) - 1:
+                return Token(EOF, None)
+            # After we've eatten all the bab whitespace lets actually grab a
+            # symantically meaningful character.
+            current_character = text[self.position]
+
+        # Saved By The Test: test_arithmetic caught an error if return_token
+        #                    was never set
+        return_token = None # Stores the token that's been lexed.
+
         if current_character.isdigit():
+            return_token = self._tokenize_integer(text)
+
+        if current_character == "*":
             self.position += 1
-            return Token(INTEGER, int(current_character))
+            return_token = Token(TIMES, current_character)
+
+        if current_character == "/":
+            self.position += 1
+            return_token = Token(DIVIDED_BY, current_character)
 
         if current_character == "+":
             self.position += 1
-            return Token(PLUS, current_character)
+            return_token =  Token(PLUS, current_character)
 
-        raise CalcError(
-            "Invalid token at position "
-            "{position}".format(position=self.position))
+        if current_character == "-":
+            self.position += 1
+            return_token = Token(MINUS, current_character)
 
-    def _consume_token(self, token_type):
+
+        if return_token is None:
+            raise CalcError(
+                "Invalid token at position "
+                "{position}".format(position=self.position))
+
+        return return_token
+
+    def _consume_token(self, matching_tokens):
         """
         Ensure that the current token type matches the given ``token_type``. If
         it does, set the current token to be the next token, effectively
         consuming a token.
 
         Args:
-            token_type (str): The type of token that is next expected by the
-                calculator. Examples include ``INTEGER``, ``PLUS``, or ``EOF``.
+            matching_tokens (list[str]): The types of tokens that is next
+            expected by the calculator.
+
+            Examples include ``INTEGER``, ``PLUS``, or ``EOF``.
 
         Returns:
             None
@@ -119,15 +216,16 @@ class Calc:
             a "private" method. See the docstring for ``_next_token`` for more
             information.
         """
-        if self.current_token.type == token_type:
+        if self.current_token.type in matching_tokens:
             self.current_token = self._next_token()
         else:
             raise CalcError(
-                "Expected {token_type} at position {position}, found "
-                "{current_token}".format(token_type=token_type,
+                "Expected {matching_tokens} at position {position}, found "
+                "{current_token}".format(matching_tokens=matching_tokens,
                                          position=self.position,
                                          current_token=self.current_token.type))
 
+    # pylint: disable=invalid-name
     def parse(self):
         """
         Attempt to consume all tokens found in the input text.
@@ -150,21 +248,44 @@ class Calc:
         # Just take whatever the first token is.
         self.current_token = self._next_token()
 
-        # We expect that the first token was an integer.
         left = self.current_token
         self._consume_token(INTEGER)
 
-        # The next expected token is a PLUS
-        self._consume_token(PLUS)
+        result = None
+        while True:
+            op = self.current_token
+            expected_operations = [PLUS, MINUS, TIMES, DIVIDED_BY]
+            self._consume_token(expected_operations)
 
-        # We expect another integer for addition to work.
-        right = self.current_token
-        self._consume_token(INTEGER)
+            right = self.current_token
+            self._consume_token(INTEGER)
 
-        # Finally, we expect to run out of input.
-        self._consume_token(EOF)
+            if result is None and op.type in (TIMES, DIVIDED_BY):
+                # multiplying or dividing 0 is bad times.
+                result = 1
 
-        # Since we now have INTEGER PLUS INTEGER we can add both integer
-        # values together.
-        result = left.value + right.value
-        return result
+
+            # Since we now have INTEGER PLUS INTEGER we can add both integer
+            # values together.
+            # NOTE: when I added the divided by operation symmantics I copied the
+            #       multiplication if statement and didn't change it to an elif.
+            #       My previous multiplication unit tests pointed out the error.
+            if op.type == TIMES:
+                result = left.value * right.value
+            elif op.type == DIVIDED_BY:
+                #  NOTE: When I first made this function I accidently did floating
+                #        point division and my unit test cought it.
+                result = left.value // right.value
+            elif op.type == PLUS:
+                result = left.value + right.value
+            elif op.type == MINUS:
+                result = left.value - right.value
+            else:
+                self._error()
+
+            left = Token(INTEGER, result)
+
+            # If we run out of input
+            if self.current_token.type == EOF:
+                self._consume_token(EOF)
+                return result
