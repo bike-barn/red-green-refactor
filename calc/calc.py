@@ -11,12 +11,16 @@ class CalcError(Exception):
     """
     The base exception for the calculator.
 
-    Exceptions in Python inherit from :class:`Exception` and can then be used
-    with the ``raise`` keyword. For example, to raise this exception one might
-    do something liket this
+    Note:
+        Exceptions in Python inherit from :class:`Exception` and can then be
+        used with the ``raise`` keyword.
+
+    Example:
+        To raise this exception one might do something like this
 
     >>> raise CalcError("Could not parse token at position 0")
     """
+    pass  # Yo, don't modify this class at all. Srsly. Just don't.
 
 
 class Calc:
@@ -46,7 +50,7 @@ class Calc:
     7
 
     """
-    def __init__(self):
+    def __init__(self, text, position=0, current_token=None):
         """Constructor for a :class:`Calc` object."""
         pass
 
@@ -74,7 +78,7 @@ class Calc:
         """
         pass
 
-    def _consume_token(self):
+    def _consume_token(self, token_type):
         """
         Ensure that the current token type matches the given ``token_type``. If
         it does, set the current token to be the next token, effectively
@@ -116,4 +120,7 @@ class Calc:
             result (int): The numeric result of parsing the input text as a set
                 of arithmetic operations.
         """
+        # This method should make use of ``_consume_token``. For example usage
+        # of that method please see the ``test_calc_can_consume_valid_token``
+        # test in ``tests/test_calc.py`` on line #53.
         pass

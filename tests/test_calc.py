@@ -3,15 +3,6 @@ import pytest
 from calc import INTEGER, EOF, PLUS, Calc, CalcError
 
 
-def test_calc_can_be_instantiated_with_blank_expression():
-    """
-    Test that an :class:`Calc` can be instantiated with a blank
-    expression.
-    """
-    input_text = ""
-    Calc(text=input_text)
-
-
 def test_calc_raises_error_on_invalid_tokens():
     """
     Test that invalid tokens cause a ``CalcError`` and that the exception stack

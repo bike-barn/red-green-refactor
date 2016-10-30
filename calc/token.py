@@ -36,7 +36,7 @@ class Token:
         of that here.
     """
 
-    def __init__(self):
+    def __init__(self, type, value):
         """Constructor for a :class:`Token` object."""
         pass
 

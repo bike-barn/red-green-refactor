@@ -1,16 +1,4 @@
-import pytest
-
 from calc import INTEGER, Token
-
-
-def test_token_cannot_be_instantiated_with_no_defaults():
-    """
-    Test that there are currently no valid defaults for a :class:`Token`. More
-    simply, ensure that a :class:`Token` cannot be instantiated without any
-    arguments.
-    """
-    with pytest.raises(TypeError):
-        Token()
 
 
 def test_token_can_be_instantiated_with_known_values():
