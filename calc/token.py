@@ -36,10 +36,9 @@ class Token:
         of that here.
     """
 
-    def __init__(self, type, value):
+    def __init__(self):
         """Constructor for a :class:`Token` object."""
-        self.type = type
-        self.value = value
+        pass
 
     def __str__(self):
         """
@@ -57,7 +56,4 @@ class Token:
             Python is actually calling the ``Token.__str__`` method to determine
             how it should create the string representation of that object.
         """
-        return "Token(type={type}, value={value})".format(
-            type=self.type,
-            value=self.value,
-        )
+        pass

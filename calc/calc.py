@@ -46,11 +46,9 @@ class Calc:
     7
 
     """
-    def __init__(self, text, position=0, current_token=None):
+    def __init__(self):
         """Constructor for a :class:`Calc` object."""
-        self.text = text
-        self.position = position
-        self.current_token = current_token
+        pass
 
     def _next_token(self):
         """
@@ -74,31 +72,9 @@ class Calc:
             prefix is used as a convention among Pythonistas to denote something
             that should not be relied upon by an external user.
         """
-        text = self.text
-        position = self.position
+        pass
 
-        # Check to make sure we haven't run out of characters. If we have,
-        # return an EOF token.
-        if position > len(text) - 1:
-            # Saved by the test: Forgot this return and tests caught it.
-            return Token(EOF, None)
-
-        # Get the character that's at the current position.
-        current_character = text[position]
-
-        if current_character.isdigit():
-            self.position += 1
-            return Token(INTEGER, int(current_character))
-
-        if current_character == "+":
-            self.position += 1
-            return Token(PLUS, current_character)
-
-        raise CalcError(
-            "Invalid token at position "
-            "{position}".format(position=self.position))
-
-    def _consume_token(self, token_type):
+    def _consume_token(self):
         """
         Ensure that the current token type matches the given ``token_type``. If
         it does, set the current token to be the next token, effectively
@@ -119,14 +95,7 @@ class Calc:
             a "private" method. See the docstring for ``_next_token`` for more
             information.
         """
-        if self.current_token.type == token_type:
-            self.current_token = self._next_token()
-        else:
-            raise CalcError(
-                "Expected {token_type} at position {position}, found "
-                "{current_token}".format(token_type=token_type,
-                                         position=self.position,
-                                         current_token=self.current_token.type))
+        pass
 
     def parse(self):
         """
@@ -147,24 +116,4 @@ class Calc:
             result (int): The numeric result of parsing the input text as a set
                 of arithmetic operations.
         """
-        # Just take whatever the first token is.
-        self.current_token = self._next_token()
-
-        # We expect that the first token was an integer.
-        left = self.current_token
-        self._consume_token(INTEGER)
-
-        # The next expected token is a PLUS
-        self._consume_token(PLUS)
-
-        # We expect another integer for addition to work.
-        right = self.current_token
-        self._consume_token(INTEGER)
-
-        # Finally, we expect to run out of input.
-        self._consume_token(EOF)
-
-        # Since we now have INTEGER PLUS INTEGER we can add both integer
-        # values together.
-        result = left.value + right.value
-        return result
+        pass
