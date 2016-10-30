@@ -19,6 +19,12 @@ class CalcError(Exception):
     """
 
 
+# Rabbit Hole: Pylint is a program that takes in as input a Python file. It'll
+#              will give you a list of syntatic, symantic, and stylistic errors
+#              that you can fix. This is how you tell pylint to ignore a style
+#              error if you don't agree with the style for specific instances.
+
+# pylint: disable=too-few-public-methods
 class Calc:
     """
     The primary calculator class which contains the logic for parsing tokens
@@ -179,7 +185,7 @@ class Calc:
 
         if current_character == "+":
             self.position += 1
-            return_token =  Token(PLUS, current_character)
+            return_token = Token(PLUS, current_character)
 
         if current_character == "-":
             self.position += 1
@@ -281,7 +287,10 @@ class Calc:
             elif op.type == MINUS:
                 result = left.value - right.value
             else:
-                self._error()
+                raise CalcError(
+                    "Unknown Operator found at {position}".format(
+                        position=self.position,
+                    ))
 
             left = Token(INTEGER, result)
 

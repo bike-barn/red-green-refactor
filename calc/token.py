@@ -14,6 +14,7 @@ PLUS, MINUS, TIMES, DIVIDED_BY = "PLUS", "MINUS", "TIMES", "DIVIDED_BY"
 #              will give you a list of syntatic, symantic, and stylistic errors
 #              that you can fix. This is how you tell pylint to ignore a style
 #              error if you don't agree with the style for specific instances.
+
 # pylint: disable=too-few-public-methods
 class Token:
     """
@@ -37,11 +38,12 @@ class Token:
 
     Rabbit hole:
         The ``type`` keyword is a reserved word in Python. It is typically bad
-        practice to create a new variable that overrides a reserved word, but 
+        practice to create a new variable that overrides a reserved word, but
         it is useful in this context and the scope is limited, so we take
         advantage of that here.
     """
 
+    # pylint: disable=redefined-builtin
     def __init__(self, type, value):
         """Constructor for a :class:`Token` object.
 
