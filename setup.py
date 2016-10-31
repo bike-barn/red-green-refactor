@@ -55,6 +55,9 @@ setup(
     test_suite='tests',
     setup_requires=['pytest-runner'],
     tests_require=test_requirements,
+    extras_require={
+        'develop': requirements + test_requirements,
+    },
     entry_points={
         'console_scripts': [
             'calc=calc.__main__:main',
