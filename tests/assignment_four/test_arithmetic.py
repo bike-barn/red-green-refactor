@@ -29,7 +29,7 @@ def test_parse_addition_identity():
 
 
 def test_parse_subtraction_identity():
-    input_text = "1 + 0"
+    input_text = "1 - 0"
     calculator = calc.Calc(text=input_text)
     assert calculator.parse() == 1
 
@@ -57,45 +57,3 @@ def test_parse_division_by_zero():
     calculator = calc.Calc(text=input_text)
     with pytest.raises(ZeroDivisionError):
         calculator.parse()
-
-
-def test_parse_multiple_addition_operations():
-    input_text = "1 + 2 + 3 + 4"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 10
-
-
-def test_parse_multiple_subtraction_operations():
-    input_text = "0 - 2 - 3 - 4"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == -9
-
-
-def test_parse_combined_addition_and_subtraction():
-    input_text = "0 + 2 - 3 + 4"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 3
-
-
-def test_parse_combined_with_division():
-    input_text = "0 + 3 / 3 + 4"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 5
-
-
-def test_parse_combined_with_multiplication():
-    input_text = "0 + 6 / 3 * 2"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 4
-
-
-def test_parse_multiple_division_operations():
-    input_text = "6 / 3 / 2"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 1
-
-
-def test_parse_multiple_multiplication_operations():
-    input_text = "2 * 3 * 2"
-    calculator = calc.Calc(text=input_text)
-    assert calculator.parse() == 12
