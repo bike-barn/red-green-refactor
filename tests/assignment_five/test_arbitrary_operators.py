@@ -51,18 +51,18 @@ def test_parse_multiple_multiplication_operations():
 def test_double_operators_throw_exception():
     input_text = "2 *2 ** 2"
     calculator = calc.Calc(text=input_text)
+    expected_message = "Expected INTEGER at position 7, found TIMES"
     with pytest.raises(calc.CalcError) as error:
         calculator.parse()
-        expected_message = "'DIVIDED_BY'] at position 7, found INTEGER"
-        assert str(error.value) == expected_message
+    assert str(error.value) == expected_message
 
 
 def test_double_integers_throw_exception():
     input_text = "2 * 2 2 * 2"
     calculator = calc.Calc(text=input_text)
+    expected_message = (
+        "Expected ['PLUS', 'MINUS', 'TIMES','DIVIDED_BY'] at position 7, "
+        "found INTEGER")
     with pytest.raises(calc.CalcError) as error:
         calculator.parse()
-        expected_message = (
-            "calc.calc.CalcError: Expected ['PLUS', 'MINUS', 'TIMES',"
-            "'DIVIDED_BY'] at position 7, found INTEGER")
-        assert str(error.value) == expected_message
+    assert str(error.value) == expected_message
