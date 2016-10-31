@@ -47,7 +47,6 @@ setup(
         'License :: OSI Approved :: ISC License (ISCL)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Topic :: Education :: Testing',
@@ -56,6 +55,9 @@ setup(
     test_suite='tests',
     setup_requires=['pytest-runner'],
     tests_require=test_requirements,
+    extras_require={
+        'develop': requirements + test_requirements,
+    },
     entry_points={
         'console_scripts': [
             'calc=calc.__main__:main',
