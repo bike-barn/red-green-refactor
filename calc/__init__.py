@@ -23,4 +23,5 @@ __email__ = 'reilly@tuckersiemens.com, alexlordthorsen@gmail.com'
 __version__ = '0.1.0'
 
 from .calc import Calc, CalcError
-from .token import INTEGER, EOF, PLUS, Token
+from .token import INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
+from .token import Token

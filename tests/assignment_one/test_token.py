@@ -1,3 +1,5 @@
+"""Tests focused on making sure the type class functions correctly.
+"""
 import pytest
 
 from calc import INTEGER, Token
