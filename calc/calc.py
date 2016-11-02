@@ -4,7 +4,7 @@ calculator class. It contains the logic necessary to tokenize input strings and
 produce a result.
 """
 
-from .token import Token, INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
+from calc.token import Token, INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
 
 
 class CalcError(Exception):
@@ -34,9 +34,6 @@ class Calc:
     Note:
         There is no verification on the input ``text`` at this time.
 
-    Args:
-        text (str): The text to be interpreted.
-
     Attributes:
         text (str): The text to be interpreted.
         position (int): The current position of the interpreter. Used as an
@@ -53,15 +50,41 @@ class Calc:
     7
 
     """
+    # Rabbit Hole:
+    #    You can read the position=0 syntax as saying "The default argument,
+    #    if you don't pass an argument to this function, is the value on the
+    #    right.
     def __init__(self, text, position=0, current_token=None):
-        """Constructor for a :class:`Calc` object."""
-        self.text = text
-        self.position = position
+        """Set's the ``text``, ``position``, and ``current_token`` attributes
+        for the ``Calc`` class.
+
+        Args:
+        text (str): The text to be interpreted.
+        position (int):
+            The current position of the interpreter. Used as an index into a
+            :obj:`str`, ``text``. Defaults to ``0``, the beginning of the input
+            ``text``.
+        current_token (Token):
+            The current :class:`Token` being evaluated by the intepreter.
+            Defaults to ``None`` as initially no :class:`Token`s have been
+            parsed.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
+        self.text = text  # text is a constant and shouldn't be modified.
+        self.position = position  # position is modified after finding a token.
+        # current_token is changed every time a new token is generated.
         self.current_token = current_token
 
     def _tokenize_integer(self, text):
         """If have found a single digit then this helper function will read
         characters until the end of the integer is found.
+
+        NOTE: This function is the one that will advance `self.position`.
 
         Args:
             text: A section of the text that is assumed to contain an integer
@@ -100,6 +123,8 @@ class Calc:
     def _consume_whitespace(self, text):
         """Eats all whitespace found until there's nothing left.
 
+        NOTE: This function may advance `self.position`.
+
         Args:
             text: The input text to have whitespace removed until a non
                   whitespace character is found.
@@ -127,18 +152,24 @@ class Calc:
 
     def _next_token(self):
         """
-        Tokenize the input ``text``. This is part of a process called lexical
-        analysis.
+        This function looks at a single character (for now) and checks if this
+        is a known character or not. If it's a known character, like '+' for
+        example, it will return a Token of type PLUS with a value of None.
+
+        NOTE: This function may advance `self.position`.
 
         Args:
             None
 
         Returns:
-            None
+            A Token
 
         Raises:
-            CalcError: If the character(s) at the given position cannot be
-                tokenized.
+            CalcError: If the current character is not a known token type.
+
+        Hint Assignment Two:
+            If you're struggling for how to match integers look up Python's
+            str.isdigit().
 
         Rabbit hole:
             The name of this method is prefixed by a ``_`` to denote that it is
@@ -205,6 +236,10 @@ class Calc:
         it does, set the current token to be the next token, effectively
         consuming a token.
 
+        NOTE:
+            This function replaces `self.current_token` but does not modify
+            `self.position`.
+
         Args:
             matching_tokens (list[str]): The types of tokens that is next
             expected by the calculator.
@@ -253,6 +288,9 @@ class Calc:
 
         Raises:
             CalcError: If an invalide operator is found.
+
+        Hint Assignment Two:
+            Start with me!
         """
         # Just take whatever the first token is.
         self.current_token = self._next_token()

@@ -24,11 +24,6 @@ class Token:
         There is no verification of valid tokens at this point. Later versions
         of this class should verify correct input parameters.
 
-    Args:
-        type (str): The type of token. Valid types are currently ``INTEGER``,
-            ``PLUS``, and ``EOF``.
-        value (:obj:`int` or :obj:`str`): The value of the token. Valid values
-            are currently non-negative integers, or the ``+`` operator.
 
     Attributes:
         type (str): The type of token. Valid types are currently ``INTEGER``,
@@ -45,7 +40,21 @@ class Token:
 
     # pylint: disable=redefined-builtin
     def __init__(self, type, value):
-        """Constructor for a :class:`Token` object."""
+        """Sets the type and value attributes for the Token class.
+
+        Args:
+            type (str):
+                The type of token. Valid types are currently ``INTEGER``,
+                ``PLUS``, and ``EOF``.
+            value (:obj:`int` or :obj:`str`):
+                The value of the token. Valid values are currently non-negative
+                integers, or the ``+`` operator.
+
+        # Rabbit Hole:
+            In Python you can have no explicit return statement in a fucntion
+            or method. These functions will return the object `None` at the end
+            of their normal execution path.
+        """
         self.type = type
         self.value = value
 
@@ -62,8 +71,9 @@ class Token:
             >>> str(Token('INTEGER', 3))
             Token(type=INTEGER, value=3)
 
-            Python is actually calling the ``Token.__str__`` method to determine
-            how it should create the string representation of that object.
+            Python is actually calling the ``Token.__str__`` method to
+            determine how it should create the string representation of that
+            object.
         """
         return "Token(type={type}, value={value})".format(
             type=self.type,

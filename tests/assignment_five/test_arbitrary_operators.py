@@ -61,7 +61,7 @@ def test_double_integers_throw_exception():
     input_text = "2 * 2 2 * 2"
     calculator = calc.Calc(text=input_text)
     expected_message = (
-        "Expected ['PLUS', 'MINUS', 'TIMES','DIVIDED_BY'] at position 7, "
+        "Expected ['PLUS', 'MINUS', 'TIMES', 'DIVIDED_BY'] at position 7, "
         "found INTEGER")
     with pytest.raises(calc.CalcError) as error:
         calculator.parse()
