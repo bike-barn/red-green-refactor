@@ -2,7 +2,6 @@
 
 A very simple calculator designed to teach software testing.
 
-
 ## What does Red Green Refactor mean?
 
 **NOTE:** If you want to just dive into code skip to the 
@@ -131,93 +130,6 @@ or concerns that folks who are new to Python might have, but that may not get
 covered in detail. Hopefully these comments will elucidate some of the more
 confusing parts in this tutorial. If not, feel free to ask questions! :smile:
 
-## Assignments
-
-### Assignment One
-
-#### Running Assignment One Tests
-For assignment one `pytest` should be invoked from the command line at the root
-of the project directory like so
-```bash
-pytest tests/assignment_one/test_token.py
-```
-
-#### Instructions
-
-The goal for assignment one is to make the tests in `tests/test_token.py` pass.
-When finished there should be a `Token` class in `calc/token.py` that can be
-instantiated with a `type` and a `value`. Calling the `str()` built-in on a
-newly instantiated `Token` should generate a string that, if copied and pasted
-back into an interpreter, should yield the same `Token`.
-
-
-```python
->>> from calc import Token
->>> token = Token(type=INTEGER, value=3)
->>> str(token)
-'Token(type=INTEGER, value=3)'
->>> Token(type=INTEGER, value=3)
->>> # This means you have made a token successfully.
-```
-
-
-### Assignment Two
-
-#### Instructions
-**NOTE:** When you're finished with Assignment Two re-run Assignment One's
-tests to make sure they still pass.
-
-The goal for assignment two is to make the tests in `tests/test_calc.py` pass.
-When finished there should be a `Calc` calss that can be instantiated with some
-`text`. Calling `Calc.parse()` should produce a valid result given text like
-`1+1` (`INTEGER PLUS INTEGER`).
-
-Start with `calc/calc.py` and look at the `calc` classes `parse` method. The
-control flow for this assigment is `parse` calls `_consume_token`, 
-`_consume_token` calls `_next_token`.
-
-```python
->>> from calc import Calc
->>> calc = Calc(text='1+1')
->>> calc.parse()
-2
->>> # This means your calculator successfully parsed addition.
-```
-
-The only arithmetic operation that needs to be supported by your calculator at
-this point is addition. Please note that the calculator cannot handle
-whitespace currently. Don't fret, _you'll_ fix this in assignment three.
-
-If the above is true then you should also be able to run your calculator
-directly from the command line like
-```bash
-user@hostname:~/Projects/calc $ calc
-calc> 1+1
-2
-calc> %
-user@hostname:~/Projects/calc $
-```
-#### Running Assignment Two Tests
-
-For assignment two `pytest` should be invoked from the command line at the root
-of the project directory like so
-```bash
-pytest tests/assignment_one/test_token.py tests/assignment_two/test_calc.py
-```
-If you're feeling particularly daring and your shell supports the syntax you
-can try running it like this instead
-```bash
-pytest tests/assignment_{one,two}
-```
-
-## Running All Tests
-Python comes with a testing framework by default. It's called `unittest` and we
-love that Python comes with one.
-
-For this class, however, we're going to be using `py.test` as our testing
-framework. There are a couple of style and feature reasons we prefer `py.test`.
-Really we're just opinionated and slightly curmudgeonly.
-
 ### **Command To Run All Tests**
 
 **NOTE**: If you run all of the unit tests without implementing any features
@@ -228,7 +140,6 @@ pytest tests/*
 ```
 
 #### Example Unit Test Output
-
 
 ```bash
 $ pytest tests/*
@@ -256,7 +167,6 @@ lines are covered by unit tests and which ones are not. When you ran `pip
 install -e .'[develop]'` you installed `pytest-cov` which is a pytest plugin that adds
 code coverage to `pytest`. This is one of the nice things about `pytest` that
 we like.
-
 
 ### Tests With Code Coverage
 
