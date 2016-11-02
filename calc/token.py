@@ -9,6 +9,12 @@ various expected states in the input text for a calculator.
 INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
 
 
+# Rabbit Hole: Pylint is a program that takes in as input a Python file. It'll
+#              will give you a list of syntatic, symantic, and stylistic errors
+#              that you can fix. This is how you tell pylint to ignore a style
+#              error if you don't agree with the style for specific instances.
+
+# pylint: disable=too-few-public-methods
 class Token:
     """
     A calculator token used to represent the current state of the calculator.
@@ -17,11 +23,6 @@ class Token:
         There is no verification of valid tokens at this point. Later versions
         of this class should verify correct input parameters.
 
-    Args:
-        type (str): The type of token. Valid types are currently ``INTEGER``,
-            ``PLUS``, and ``EOF``.
-        value (:obj:`int` or :obj:`str`): The value of the token. Valid values
-            are currently non-negative integers, or the ``+`` operator.
 
     Attributes:
         type (str): The type of token. Valid types are currently ``INTEGER``,
@@ -31,13 +32,28 @@ class Token:
 
     Rabbit hole:
         The ``type`` keyword is a reserved word in Python. It is typically bad
-        practice to create a new variable that overrides a reserved word, but it
-        is useful in this context and the scope is limited, so we take advantage
-        of that here.
+        practice to create a new variable that overrides a reserved word, but
+        it is useful in this context and the scope is limited, so we take
+        advantage of that here.
     """
 
+    # pylint: disable=redefined-builtin
     def __init__(self, type, value):
-        """Constructor for a :class:`Token` object."""
+        """Sets the type and value attributes for the Token class.
+
+        Args:
+            type (str):
+                The type of token. Valid types are currently ``INTEGER``,
+                ``PLUS``, and ``EOF``.
+            value (:obj:`int` or :obj:`str`):
+                The value of the token. Valid values are currently non-negative
+                integers, or the ``+`` operator.
+
+        # Rabbit Hole:
+            In Python you can have no explicit return statement in a fucntion
+            or method. These functions will return the object `None` at the end
+            of their normal execution path.
+        """
         pass
 
     def __str__(self):
@@ -53,7 +69,8 @@ class Token:
             >>> str(Token('INTEGER', 3))
             Token(type=INTEGER, value=3)
 
-            Python is actually calling the ``Token.__str__`` method to determine
-            how it should create the string representation of that object.
+            Python is actually calling the ``Token.__str__`` method to
+            determine how it should create the string representation of that
+            object.
         """
         pass
