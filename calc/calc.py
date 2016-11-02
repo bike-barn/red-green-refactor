@@ -4,7 +4,7 @@ calculator class. It contains the logic necessary to tokenize input strings and
 produce a result.
 """
 
-from calc.token import Token, INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
+from calc.token import Token, INTEGER, EOF, PLUS
 
 
 class CalcError(Exception):

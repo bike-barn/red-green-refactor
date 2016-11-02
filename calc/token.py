@@ -6,8 +6,7 @@ various expected states in the input text for a calculator.
 # Saved by the test: When these constants were defined the token strings were
 # inadvertently switched. The ``test_eof_token_at_end_of_line`` test caught the
 # error.
-INTEGER, EOF = 'INTEGER', 'EOF'
-PLUS, MINUS, TIMES, DIVIDED_BY = "PLUS", "MINUS", "TIMES", "DIVIDED_BY"
+INTEGER, EOF, PLUS = 'INTEGER', 'EOF', 'PLUS'
 
 
 # Rabbit Hole: Pylint is a program that takes in as input a Python file. It'll
