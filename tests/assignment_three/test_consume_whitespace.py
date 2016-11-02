@@ -31,35 +31,35 @@ import pytest
 from calc import INTEGER, EOF, PLUS, Calc, CalcError
 
 
-def test_parse_handles_whitespace_correctly():
+def test_calc_can_parse_whitespace_correctly():
     """
     Test that ``Calc.parse()`` can handle whitespace correctly.
     """
     assert False  # Don't just make this True.
 
 
-def test_parse_handles_pre_whitespace_correctly():
+def test_calc_can_parse_pre_whitespace_correctly():
     """
     Test that ``Calc.parse()`` handles whitespace at the start of input text.
     """
     assert False  # Don't just make this True.
 
 
-def test_parse_handles_post_whitespace_correctly():
+def test_calc_can_parse_post_whitespace_correctly():
     """
     Test that ``Calc.parse()`` handles whitespace at the end of input text.
     """
     assert False  # Don't just make this True.
 
 
-def test_parse_handles_mid_condition_whitespace_correctly():
+def test_calc_can_parse_mid_whitespace_correctly():
     """
     Test that ``Calc.parse()`` handles whitespace in the middle of input text.
     """
     assert False  # Don't just make this True.
 
 
-def test_parse_handles_all_forms_of_whitespace():
+def test_calc_can_parse_all_forms_of_whitespace():
     """
     Test that ``Calc.parse()`` can handle other forms of whitespace besides just
     the space character. What other forms of whitespace exist?
