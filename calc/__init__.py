@@ -22,5 +22,6 @@ __author__ = 'Reilly Tucker Siemens, Alex LordThorsen'
 __email__ = 'reilly@tuckersiemens.com, alexlordthorsen@gmail.com'
 __version__ = '0.1.0'
 
-from .calc import Calc, CalcError
-from .token import INTEGER, EOF, PLUS, Token
+from calc.calc import Calc, CalcError
+from calc.token import INTEGER, EOF, PLUS, MINUS, TIMES, DIVIDED_BY
+from calc.token import Token
